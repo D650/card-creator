@@ -1,0 +1,6 @@
+streamlit
+firebase_admin
+openai
+re
+json
+google.oauth2
