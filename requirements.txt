@@ -1,4 +1,4 @@
 streamlit
 firebase_admin
 openai
-google.oauth2
+google-auth-oauthlib
