@@ -3,7 +3,6 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import openai
-import re
 import json
 from google.oauth2 import service_account
 
@@ -11,8 +10,7 @@ from google.oauth2 import service_account
 #   open AI
 openai.api_key = json.loads(st.secrets["openai_api_key"])
 
-# openai.api_key = jason_openai_api_key
-#   Firebase
+#Firebase
 
 #Try to initialize app, but if it already exists, pass
 try:
@@ -40,7 +38,6 @@ def create_doc(email_input, topic_input):
 
     # st.write(f"{doc_ref.id} is created at {create_time}")
 
-
 def is_topic_relevant_to_debate(topic):
     if len(topic) == 0:
         return False
@@ -61,8 +58,6 @@ def is_topic_offensive(topic):
                                                         messages=[{"role": "assistant", "content": is_relevant_prompt}])
     return (str(is_relevant_response.choices[0].message.content).find("Yes") >= 0)
 
-
-
 def check_email(email):
     pat = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
     if re.match(pat, email):
@@ -79,28 +74,17 @@ with st.form("email and topic", clear_on_submit=False):
     submitted = st.form_submit_button("Submit")
     if submitted:
        # st.write(email_input, topic_input)
-       if check_email(email_input):
-           if is_topic_relevant_to_debate(topic_input):
+        if is_topic_relevant_to_debate(topic_input):
             create_doc(email_input, topic_input)
             if not is_topic_offensive(topic_input):
                 st.success("Awesome! Your cards will be created, and sent to the email address provided.")
             else:
                 st.error("The entered topic contains offensive content. Please provide a valid and respectful topic for debate. If you believe this is an error, please contact support at debatecardcreator@gmail.com")
-           else:
+        else:
                st.error("That doesn't look relevant to debate. Try restructing your prompt to be more argumentative, and resubmit.")
-       else:
-           st.error("That email address doesn't look right. Fix it and resubmit.")
-
-
 
 coll_ref = firestore_client.collection("tasks")
 
 
 
-
-#
-# # Read firebase database
-# docs = coll_ref.stream()
-# for doc in docs:
-#     st.write(f'{doc.id} = {doc.to_dict()}')
 
