@@ -10,7 +10,7 @@ from google.oauth2 import service_account
 #Authentication
 #   open AI
 openai.api_key = json.loads(st.secrets["openai_api_key"])
-jason_openai_api_key = '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'
+
 # openai.api_key = jason_openai_api_key
 #   Firebase
 
