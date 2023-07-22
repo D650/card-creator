@@ -1,6 +1,3 @@
 streamlit
 firebase_admin
 openai
-google.oauth2
-time
-json
