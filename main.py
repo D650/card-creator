@@ -105,7 +105,7 @@ with st.form("email and topic", clear_on_submit=False):
                 create_doc(email_input, topic_input)
 
                 if not is_topic_offensive(topic_input):
-                    st.success("Awesome! Your cards will be created, and sent to the email address provided.")
+                    st.success("Awesome! Your cards will be created, and sent to the email address provided. During the current version of deb8er, we are manually checking cards from the card cutter so they may take a while to get to you. Thank you for your patience. If your cards have not been generated after a while, feel free to contact us at debatecardcreator@gmail.com.")
                 else:
                     st.error("The entered topic contains offensive content. Please provide a valid and respectful topic for debate. If you believe this is an error, please contact support at debatecardcreator@gmail.com")
             else:
