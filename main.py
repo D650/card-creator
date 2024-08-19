@@ -35,6 +35,18 @@ except ValueError:
 
 firestore_client = firestore.client()
 
+def send_email(user, topic):
+    #function to send out email using a GMail account
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()   
+    s.login(st.secrets["gmail_username"], st.secrets["gmail_pass"])
+    subject = "User Requested Cards"
+    text = f"User {user} requested cards about the topic {topic}"
+    message = 'Subject: {}\n\n{}'.format(subject, text)
+    s.sendmail(st.secrets["gmail_username"], st.secrets["gmail_username"], msg=message)
+    s.quit()
+
 def create_doc(email_input, topic_input):
     coll_ref = firestore_client.collection("tasks")
     create_time, doc_ref = coll_ref.add(
@@ -44,7 +56,8 @@ def create_doc(email_input, topic_input):
             "status": False
         }
     )
-
+    #send email to deb8er acct notifying
+    send_email(email_input, topic_input)
     # st.write(f"{doc_ref.id} is created at {create_time}")
 
 
