@@ -62,25 +62,25 @@ def create_doc(email_input, topic_input):
     # st.write(f"{doc_ref.id} is created at {create_time}")
 
 
-def is_topic_relevant_to_debate(topic):
-    if len(topic) == 0:
-        return False
-    is_relevant_prompt = "Is the following topic relevant to high school debate: '" + topic + "'"
-    is_relevant_prompt += "\n Respond with 'Yes' or 'No' only. Do not include anything else is response"
-    is_relevant_response = openai.ChatCompletion.create(model="gpt-3.5-turbo", temperature=0.2, max_tokens=500,
-                                                        frequency_penalty=0,
-                                                        messages=[{"role": "assistant", "content": is_relevant_prompt}])
-    return (str(is_relevant_response.choices[0].message.content).find("Yes") >= 0)
+# def is_topic_relevant_to_debate(topic):
+#     if len(topic) == 0:
+#         return False
+#     is_relevant_prompt = "Is the following topic relevant to high school debate: '" + topic + "'"
+#     is_relevant_prompt += "\n Respond with 'Yes' or 'No' only. Do not include anything else is response"
+#     is_relevant_response = openai.ChatCompletion.create(model="gpt-3.5-turbo", temperature=0.2, max_tokens=500,
+#                                                         frequency_penalty=0,
+#                                                         messages=[{"role": "assistant", "content": is_relevant_prompt}])
+#     return (str(is_relevant_response.choices[0].message.content).find("Yes") >= 0)
 
-def is_topic_offensive(topic):
-    if len(topic) == 0:
-        return False
-    is_offensive_prompt = "Is the following topic offensive (contains sexism, racism, homophobia, etc.): '" + topic + "'"
-    is_offensive_prompt += "\n Respond with 'Yes' or 'No' only. Do not include anything else is response"
-    is_offensive_response = openai.ChatCompletion.create(model="gpt-3.5-turbo", temperature=0.2, max_tokens=500,
-                                                        frequency_penalty=0,
-                                                        messages=[{"role": "assistant", "content": is_offensive_prompt}])
-    return (str(is_offensive_response.choices[0].message.content).find("Yes") >= 0)
+# def is_topic_offensive(topic):
+#     if len(topic) == 0:
+#         return False
+#     is_offensive_prompt = "Is the following topic offensive (contains sexism, racism, homophobia, etc.): '" + topic + "'"
+#     is_offensive_prompt += "\n Respond with 'Yes' or 'No' only. Do not include anything else is response"
+#     is_offensive_response = openai.ChatCompletion.create(model="gpt-3.5-turbo", temperature=0.2, max_tokens=500,
+#                                                         frequency_penalty=0,
+#                                                         messages=[{"role": "assistant", "content": is_offensive_prompt}])
+#     return (str(is_offensive_response.choices[0].message.content).find("Yes") >= 0)
 
 def is_email(email):
     if len(email) == 0:
@@ -112,31 +112,31 @@ with st.form("email and topic", clear_on_submit=False):
     submitted = st.form_submit_button("Submit")
     try:
         if submitted:
+            st.write(email_input, topic_input)
+            create_doc(email_input, topic_input)
+            st.success("Awesome! Your cards will be created, and sent to the email address provided. We are currently manually checking cards so they may take a while to get to you, however if your cards have not been generated after a while, feel free to contact us at debatecardcreator@gmail.com.")
+            # # st.write(email_input, topic_input)
 
-            # st.write(email_input, topic_input)
+            # if is_topic_relevant_to_debate(topic_input):
+            #     create_doc(email_input, topic_input)
 
-            if is_topic_relevant_to_debate(topic_input):
-                create_doc(email_input, topic_input)
+            #     if not is_topic_offensive(topic_input):
+            #         st.success("Awesome! Your cards will be created, and sent to the email address provided. During the current version of deb8er, we are manually checking cards from the card cutter so they may take a while to get to you. Thank you for your patience. If your cards have not been generated after a while, feel free to contact us at debatecardcreator@gmail.com.")
+            #     else:
+            #         st.error("The entered topic contains offensive content. Please provide a valid and respectful topic for debate. If you believe this is an error, please contact support at debatecardcreator@gmail.com")
+            # else:
+            #     st.error("That doesn't look relevant to debate. Try restructing your prompt to be more argumentative, and resubmit.")
 
-                if not is_topic_offensive(topic_input):
-                    st.success("Awesome! Your cards will be created, and sent to the email address provided. During the current version of deb8er, we are manually checking cards from the card cutter so they may take a while to get to you. Thank you for your patience. If your cards have not been generated after a while, feel free to contact us at debatecardcreator@gmail.com.")
-                else:
-                    st.error("The entered topic contains offensive content. Please provide a valid and respectful topic for debate. If you believe this is an error, please contact support at debatecardcreator@gmail.com")
-            else:
-                st.error("That doesn't look relevant to debate. Try restructing your prompt to be more argumentative, and resubmit.")
+            # progress_text = "Submission in progress. Please wait."
+            # my_bar = st.progress(0, text=progress_text)
 
-            progress_text = "Submission in progress. Please wait."
-            my_bar = st.progress(0, text=progress_text)
+            # for percent_complete in range(100):
 
-            for percent_complete in range(100):
-
-                    time.sleep(0.1)
-                    my_bar.progress(percent_complete + 1, text=progress_text)
+            #         time.sleep(0.1)
+            #         my_bar.progress(percent_complete + 1, text=progress_text)
     except RateLimitError:
         st.error("Slow down.")
         time.sleep(20)
-
-
 
 coll_ref = firestore_client.collection("tasks")
 
