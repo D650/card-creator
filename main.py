@@ -101,7 +101,7 @@ def is_email(email):
 
 # set the title
 st.title("📝 Card Cutter")
-st.error("NOTICE: Due to overwhelming demand, we are unable to process any new requests till the 1st of January. Please be patient as we strive to keep this program free for everyone.",icon='⚠️')
+st.error("NOTICE: Due to overwhelming demand, we are unable to process any new requests till the 1st of January. Please be patient as we strive to keep this program free for everyone.")
 st.info("This card cutter finds and cuts paragraphs from research articles, and provides you with a paragraph of evidence, links and author names.",icon='❓')
 
 
