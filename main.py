@@ -101,7 +101,6 @@ def is_email(email):
 
 # set the title
 st.title("📝 Card Cutter")
-st.error("NOTICE: Due to overwhelming demand, we are unable to process any new requests till the 1st of January. Please be patient as we strive to keep this program free for everyone.")
 st.info("This card cutter finds and cuts paragraphs from research articles, and provides you with a paragraph of evidence, links and author names.",icon='❓')
 
 
@@ -115,6 +114,7 @@ with st.form("email and topic", clear_on_submit=False):
             st.write(email_input, topic_input)
             create_doc(email_input, topic_input)
             st.success("Awesome! Your cards will be created, and sent to the email address provided. We are currently manually checking cards so they may take a while to get to you, however if your cards have not been generated after a while, feel free to contact us at debatecardcreator@gmail.com.")
+            st.error("Do not spam requests. Your request will be processed. Sending multiple requests will only slow down the system and reduce the total amount of cards we are able to cut.")
             # # st.write(email_input, topic_input)
 
             # if is_topic_relevant_to_debate(topic_input):
