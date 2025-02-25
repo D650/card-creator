@@ -36,6 +36,7 @@ except ValueError:
 
 firestore_client = firestore.client()
 
+
 def send_email(user, topic):
     #function to send out email using a GMail account
     s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -100,12 +101,14 @@ def is_email(email):
 #         return False
 
 # set the title
+
+
 st.title("📝 Card Cutter")
 st.info("This card cutter finds and cuts paragraphs from research articles, and provides you with a paragraph of evidence, links and author names.",icon='❓')
 
 
 
-with st.form("email and topic", clear_on_submit=False):
+with st.form("email and topic", clear_on_submit=True):
     email_input = st.text_input(label='Email')
     topic_input = st.text_input(label='Card Topic')
     submitted = st.form_submit_button("Submit")
